@@ -1,8 +1,8 @@
-﻿<!--Author: W3layouts
+<!--Author: W3layouts
 Author URL: http://w3layouts.com
 License: Creative Commons Attribution 3.0 Unported
 License URL: http://creativecommons.org/licenses/by/3.0/
--->
+
 <!DOCTYPE HTML>
 <html>
 <head>
@@ -33,7 +33,7 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 				<div class="header-main">
 					<div class="header-left">
 							<div class="logo-name">
-									 <a href="index.html"> <h1>Shoppy</h1> 
+									 <a href="index.html"> <h1>DR Pare Brise</h1> 
 									<!--<img id="logo" src="" alt="Logo"/>--> 
 								  </a> 								
 							</div>
@@ -229,80 +229,65 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 <!--inner block start here-->
 <div class="inner-block">
     <div class="blank">
-    	<h2>Credit</h2>
-    	<section class="contact py-lg-4 py-md-3 py-sm-3 py-3">
-         <div class="container py-lg-5 py-md-4 py-sm-4 py-3">
-            <div class="contact-list-grid">
-             <form method="POST" action="traitement.php">
-                  <div class=" agile-wls-contact-mid">
-                     <div class="form-group contact-forms">
-                        <input type="text" id="nom" name="nom" class="form-control" placeholder="nom">
-                     </div>
-                     <div class="form-group contact-forms">
-                        <input type="text" id="marque" name="marque" class="form-control" placeholder="marque">
-                     </div>
-                     <div class="form-group contact-forms">
-                        <input type="text" id="montant" name="montant" class="form-control" placeholder="montant">
-                     </div>
-                     <button type="submit"  class="btn btn-block sent-butnn" onclick="afficher()" >Send</button>
-                  </div>
-              </form>
-            </div>
-			<div>
-			<?php
-
-include "../entities/credit.php";
-include "../core/creditC.php";
-$db=config::getconnexion();
-$r=new credits();
-
-if(isset($_POST['tri']))
-
-{
-	$listecredit=$db->query("SELECT * FROM credit ORDER BY credit.`montant` ASC");
-}
-else if(isset($_POST['tria']))
-{
-	$listecredit=$db->query("SELECT * FROM credit ORDER BY credit.`montant` DESC");
-}
-else 
-$listecredit=$r->affichercredits();
-//$r->supprimercredits();
-?>
-<form method="POST">
-					  	<button width="50%" type="submit" name="tri" class="glyphicon glyphicon-sort-by-order"></button> 
-					  	<button width="50%" type="submit" name="tria" class="glyphicon glyphicon-sort-by-order-alt"></button> 
-					  </form>
-<table border="1" width="40%"><center>
-<tr>
-<td>nom</td>
-<td>marque</td>
-<td>montant</td>
-</tr>
-
-<?PHP
-foreach($listecredit as $row){
-	?>
-	<tr>
-	<td><?PHP echo $row['nom']; ?></td>
-	<td><?PHP echo $row['marque']; ?></td>
-	<td><?PHP echo $row['montant']; ?></td>
-	<td><a href='../core/supprimerC.php?id=<?php echo$row['id'];?>'>SUPPRIMER</a>
-	<td><a href="modifierC.php?id=<?php echo$row['id'];?>">modifier </a>
-	</tr>
-	<?PHP
-}
-?>
-</center></table></div>
-         </div>
-         <!--//contact-map -->
-      </section>
+    	<?php if(isset($_GET['alert'])){$alert = $_GET["alert"];}?>
+    	<?php if (isset($alert) && ($alert !== '')){?>
+    	<span class="alert alert-danger"><?php echo $alert?></span>
+    <?php }?>
+    	<h2>Ajouter Promotion</h2>
+    	<div class="blankpage-main">
+ <form method="POST" action="ajoutPromotion.php">
+		<table>
+			
+			<tr>
+				<td>NOM</td>
+				<td><input type="text" name="Nom" id="nom" > <span id="missnom" ></span> </td> 
+				
+			</tr>
+			<tr>
+				<td>POURCENTAGE</td>
+				<td><input type="number" id="pourcentage" name="Pourcentage"> <span id="misspourcentage"></span></td>
+			</tr>
+			<tr>
+				<td>PRODUIT</td>
+				<td>
+					<select name="ID_produit" id="ID_produit">
+						<?php
+							$db= new PDO('mysql:host=localhost;dbname=projet_web', 'root', '');
+							$reponse = $db->query('SELECT * FROM produit') ; 
+							while ($donnees = $reponse->fetch()) 
+							{
+							?>
+ 
+   						 <option value="<?php echo $donnees['ID_produit']; ?>"> <?php echo $donnees['Libelle']; ?></option>
+                 
+               				 	<?php   
+                				}
+                				?>
+                	</select>
+				</td>
+			</tr>
+			<tr>
+				<td>Date Debut</td>
+				<td><input type="date" name="Date_debut"></td>
+			</tr>
+			<tr>
+				<td>Date Fin</td>
+				<td><input type="date" name="Date_fin"></td>
+			</tr>
+			<tr>
+				<td></td>
+				<td><input type="submit" name="Ajouter" id="bouton"  value="ajouter"></td>
+			</tr>
+			
+		</table>
+	</form>	
+ </div>
     </div>
 </div>
 <!--inner block end here-->
 <!--copy rights start here-->
 <div class="copyrights">
-	 <p> © 2019 Dr Parebrise. All Rights Reserved | Design by Pentagon </p>
+	 <p>© 2016 Shoppy. All Rights Reserved | Design by  <a href="http://w3layouts.com/" target="_blank">W3layouts</a> </p>
 </div>	
 <!--COPY rights end here-->
 </div>
@@ -318,7 +303,7 @@ foreach($listecredit as $row){
 		        <li><a href="#"><i class="fa fa-cogs"></i><span>Components</span><span class="fa fa-angle-right" style="float: right"></span></a>
 		          <ul>
 		            <li><a href="grids.html">Grids</a></li>
-		            <li><a href="portlet.php">Portlets</a></li>		            
+		            <li><a href="portlet.html">Portlets</a></li>		            
 		          </ul>
 		        </li>
 		        <li id="menu-comunicacao" ><a href="#"><i class="fa fa-book nav_icon"></i><span>Element</span><span class="fa fa-angle-right" style="float: right"></span></a>
@@ -340,14 +325,17 @@ foreach($listecredit as $row){
 		        <li><a href="charts.html"><i class="fa fa-bar-chart"></i><span>Charts</span></a></li>
 		        <li><a href="#"><i class="fa fa-envelope"></i><span>Mailbox</span><span class="fa fa-angle-right" style="float: right"></span></a>
 		        	 <ul id="menu-academico-sub" >
-			            <li id="menu-academico-avaliacoes" ><a href="inbox.php">Inbox</a></li>
+			            <li id="menu-academico-avaliacoes" ><a href="inbox.html">Inbox</a></li>
 			            <li id="menu-academico-boletim" ><a href="inbox-details.html">Compose email</a></li>
 		             </ul>
 		        </li>
-		         <li><a href="#"><i class="fa fa-cog"></i><span>System</span><span class="fa fa-angle-right" style="float: right"></span></a>
+		         <li><a href="#"><i class="fa fa-cog"></i><span>Marketing</span><span class="fa fa-angle-right" style="float: right"></span></a>
 		         	 <ul id="menu-academico-sub" >
 			            <li id="menu-academico-avaliacoes" ><a href="404.html">404</a></li>
-			            <li id="menu-academico-boletim" ><a href="blank.php">Credit</a></li>
+			            <li id="menu-academico-boletim" ><a href="blank.php">Ajouter promotion</a></li>
+			            <li id="menu-academico-boletim" ><a href="blank2.html">Ajouter evenement</a></li>
+			            <li id="menu-academico-boletim" ><a href="afficherPromotion.php">Promotions</a></li>
+			            <li id="menu-academico-boletim" ><a href="afficherEvent.php">Events</a></li>
 		             </ul>
 		         </li>
 		         <li><a href="#"><i class="fa fa-shopping-cart"></i><span>E-Commerce</span><span class="fa fa-angle-right" style="float: right"></span></a>
@@ -362,20 +350,52 @@ foreach($listecredit as $row){
 	<div class="clearfix"> </div>
 </div>
 <!--slide bar menu end here-->
-	  <script>
-function afficher()
-{
-var nom=document.getElementById('nom').value;
-var marque=document.getElementById('marque').value;
-var montant=document.getElementById('montant').value;
-if((nom=="")||(marque=="")||(montant=="")||(isNaN(montant)))
-{
-alert("verifier les champs");
-}
-else{
-alert(' envoyer ');
-}
-}
+
+<script >
+	var formValid = document.getElementById('bouton');
+            var nom = document.getElementById('nom');
+            var missnom = document.getElementById('missnom');
+            var nomValid = /[A-Z-a-z]/;
+            
+            formValid.addEventListener('click', validation);
+            
+            function validation(event){
+                //Si le champ est vide
+                if (nom.validity.valueMissing){
+                    event.preventDefault();
+                    missnom.textContent = 'Saisir le nom correctement';
+                    missnom.style.color = 'red';
+		
+					
+                //Si le format de données est incorrect
+                }else if (nomValid.test(nom.value) == false){
+                    event.preventDefault();
+                    missnom.textContent = 'Saisir le nom correctement';
+                    missnom.style.color = 'orange';
+                }
+            }
+
+
+            var pourcentage = document.getElementById('pourcentage');
+            var misspourcentage = document.getElementById('misspourcentage');
+            var pourcentageValid = /[0-9]/;
+            
+            formValid.addEventListener('click', validation1);
+            
+            function validation1(event){
+                //Si le champ est vide
+                if (pourcentage.validity.valueMissing){
+                    event.preventDefault();
+                    misspourcentage.textContent = 'Saisir la Pourcentage correctement';
+                    misspourcentage.style.color = 'red';
+                //Si le format de données est incorrect
+                }else if (cinValid.test(cin.value) == false){
+                    event.preventDefault();
+                    misspourcentage.textContent = 'Format incorrect';
+                    misspourcentage.style.color = 'orange';
+					
+                }else{ 
+                }
 </script>
 <script>
 var toggle = true;
@@ -404,3 +424,7 @@ $(".sidebar-icon").click(function() {
 <!-- mother grid end here-->
 </body>
 </html>
+
+
+                      
+						
